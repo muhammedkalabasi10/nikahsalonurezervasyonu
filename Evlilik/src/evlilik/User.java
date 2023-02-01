@@ -1,5 +1,6 @@
 package evlilik;
 
+import javax.swing.*;
 import java.sql.*;
 
 public class User {
@@ -47,8 +48,37 @@ public class User {
             e.printStackTrace();
         }
     }
+
+    public User(String eMail, String password) throws UserNotFoundException{
+        DBConnection db=new DBConnection();
+        try{
+            Connection con=db.ConnDB();
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery("SELECT * FROM users WHERE email=\""+eMail+"\" and password=\""+password+"\"");
+            if(rs.next()){
+                this.manName=rs.getString("man_name");
+                this.manSurname=rs.getString("man_surname");
+                this.manAge=rs.getInt("man_age");
+                this.manCity=rs.getString("man_city");
+                this.manId=rs.getString("man_id");
+                this.womanName=rs.getString("woman_name");
+                this.womanSurname=rs.getString("woman_surname");
+                this.womanAge=rs.getInt("woman_age");
+                this.womanCity=rs.getString("woman_city");
+                this.womanId=rs.getString("woman_id");
+                this.eMail=rs.getString("email");
+                this.account_id=rs.getInt("account_id");
+                st.close();
+                con.close();
+            }else{
+                throw new UserNotFoundException("Kullanıcı bulunamadı...");
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
     
-    public User(String manName, String womanName,String manSurname, String womanSurname, int manAge, int womanAge, String manId, String womanId, String manCity, String womanCity, String eMail, String password) {
+    public User(String manName, String womanName,String manSurname, String womanSurname, int manAge, int womanAge, String manCity, String womanCity, String eMail, String password, String manId , String womanId) throws ExistingUserException {
         //hesap bilgileri ile yeni bir user nesnesi oluşturmak için constructor oluşturuldu - overloading
         this.manName = manName;
         this.womanName = womanName;
@@ -62,6 +92,34 @@ public class User {
         this.womanCity = womanCity;
         this.eMail=eMail;
         this.password=password;
+        try{
+            DBConnection db=new DBConnection();
+            Connection con=db.ConnDB();
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery("SELECT *FROM users WHERE man_id='"+manId+"'AND woman_id='"+womanId+"'");
+            if(rs.next()){
+                throw new ExistingUserException("Kullanıcı zaten kayıtlı");
+            }
+            PreparedStatement pre = con.prepareStatement("INSERT INTO users " + "(man_name, woman_name, man_surname, woman_surname, man_age, woman_age, man_city, woman_city, email, password, man_id, woman_id) VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?)");
+            pre.setString(1, manName);
+            pre.setString(2, womanName);
+            pre.setString(3, manSurname);
+            pre.setString(4, womanSurname);
+            pre.setInt(5, manAge);
+            pre.setInt(6, womanAge);
+            pre.setString(7, manCity);
+            pre.setString(8, womanCity);
+            pre.setString(9, eMail);
+            pre.setString(10, password);
+            pre.setString(11, manId);
+            pre.setString(12, womanId);
+            pre.executeUpdate();
+            ResultSet rsAccId=st.executeQuery("SELECT account_id FROM users WHERE man_id='"+manId+"'AND woman_id='"+womanId+"'");
+            rsAccId.next();
+            this.account_id=rsAccId.getInt("account_id");
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
     
     public boolean deleteAcc(){

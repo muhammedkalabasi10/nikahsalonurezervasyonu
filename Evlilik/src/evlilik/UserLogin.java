@@ -98,39 +98,15 @@ public class UserLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Boş Yer Bırakma!");
         }
         else{
-            boolean key=true;
-            DBConnection db=new DBConnection();
             try{
-                Connection con=db.ConnDB();
-                Statement st=con.createStatement();
-                ResultSet rs=st.executeQuery("SELECT *FROM users");
-                while(rs.next()){
-                    if(jTextField1.getText().equals(rs.getString("email")) && password.equals(rs.getString("password"))){
-                        User usr=new User();
-                        usr.setManName(rs.getString("man_name"));
-                        usr.setWomanName(rs.getString("woman_name"));
-                        usr.setManSurname(rs.getString("man_surname"));
-                        usr.setWomanSurname(rs.getString("woman_surname"));
-                        usr.setManAge(rs.getInt("man_age"));
-                        usr.setWomanAge(rs.getInt("woman_age"));
-                        usr.setManCity(rs.getString("man_city"));
-                        usr.setWomanCity(rs.getString("woman_city"));
-                        usr.setManId(rs.getString("man_id"));
-                        usr.setWomanId(rs.getString("woman_id"));
-                        usr.seteMail(rs.getString("email"));
-                        usr.setAccount_id(rs.getInt("account_id"));
-                        key=false;
-                        new UserWindow(rs.getInt("account_id"),usr).setVisible(true);
-                        this.dispose();
-                        
-                    }
-                }
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null, ex);
-            }
-            if(key){
+                User usr=new User(jTextField1.getText(),password);
+                dispose();
+                new UserWindow(usr.getAccount_id(),usr).setVisible(true);
+            }catch (Exception e){
                 JOptionPane.showMessageDialog(null, "YANLIŞ BİLGİ GİRDİN!");
             }
+
+
         }
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

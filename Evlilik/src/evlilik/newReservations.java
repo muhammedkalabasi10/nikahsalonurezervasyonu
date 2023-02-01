@@ -16,7 +16,7 @@ public class newReservations extends javax.swing.JFrame {
             //şehirler listelendi
             Connection con=db.ConnDB();
             Statement st=con.createStatement();
-            ResultSet rs=st.executeQuery("select * from citys");
+            ResultSet rs=st.executeQuery("select * from cities");
             while(rs.next()){
                 jComboBox1.addItem(rs.getString("city_name"));
             }
@@ -177,7 +177,7 @@ public class newReservations extends javax.swing.JFrame {
         try{
             Connection con=db.ConnDB();
             Statement st=con.createStatement();
-            ResultSet rs=st.executeQuery("select * from citys");
+            ResultSet rs=st.executeQuery("select * from cities");
             while(rs.next()){
                 if(jComboBox1.getSelectedItem().equals(rs.getString("city_name"))){
                     int id=rs.getInt("city_id");

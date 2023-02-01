@@ -599,7 +599,7 @@ public class AdminWindow extends javax.swing.JFrame {
         try{
             Connection con=db.ConnDB();
             Statement st=con.createStatement();
-            ResultSet rs2=st.executeQuery("select * from citys");
+            ResultSet rs2=st.executeQuery("select * from cities");
             while(rs2.next()){
                 sehirler.addItem(rs2.getString("city_name"));
             }
@@ -684,7 +684,7 @@ public class AdminWindow extends javax.swing.JFrame {
             if(sehirler.getSelectedItem()!=null){
             Connection con=db.ConnDB();
             Statement st=con.createStatement();
-            ResultSet rs2=st.executeQuery("select * from citys");
+            ResultSet rs2=st.executeQuery("select * from cities");
             while(rs2.next()){
                 if(sehirler.getSelectedItem().equals(rs2.getString("city_name"))){
                     int id=rs2.getInt("city_id");

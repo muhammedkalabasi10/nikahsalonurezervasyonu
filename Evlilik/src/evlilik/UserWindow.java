@@ -170,7 +170,7 @@ User usr;
             Statement st=con.createStatement();
             //kullanıcının daha önce rezervasyon yapıp yapmadığı kontrol ediliyor
             ResultSet rs=st.executeQuery("SELECT * FROM reservations WHERE account_id='"+account_id+"'");
-            while(rs.next()){
+            if(rs.next()){
                 ctrl=false;
             }
             if(ctrl==true){

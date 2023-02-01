@@ -28,7 +28,7 @@ public abstract class Manager {
             DBConnection db=new DBConnection();
             Connection con=db.ConnDB();
             Statement st=con.createStatement();
-            ResultSet rs=st.executeQuery("SELECT * FROM citys WHERE city_name='"+sehir+"'");
+            ResultSet rs=st.executeQuery("SELECT * FROM cities WHERE city_name='"+sehir+"'");
             while(rs.next()){
                 isSehir=true;
                 //veritabanında kullanıcının girdiği şehrin olup olmadığı kontrol ediliyor eğer var ise şehir id'si çekiliyor
@@ -37,12 +37,12 @@ public abstract class Manager {
             rs.close();
             if(isSehir==false){
                 //eğer veritabanında daha önce böyle bir şehir bulunamadıysa yeni şehir ekleniyor
-                PreparedStatement pre=con.prepareStatement("INSERT INTO citys "+"(city_name) VALUES"+"(?)");
+                PreparedStatement pre=con.prepareStatement("INSERT INTO cities "+"(city_name) VALUES"+"(?)");
                 pre.setString(1, sehir);
                 pre.executeUpdate();
                 pre.close();
             }
-            ResultSet rs2=st.executeQuery("SELECT * FROM citys WHERE city_name='"+sehir+"'");
+            ResultSet rs2=st.executeQuery("SELECT * FROM cities WHERE city_name='"+sehir+"'");
             while(rs2.next()){
                 sehir_id=rs2.getInt("city_id");
             }
@@ -76,7 +76,7 @@ public abstract class Manager {
         try{
             Connection con=db.ConnDB();
             Statement st=con.createStatement();
-            ResultSet rs=st.executeQuery("SELECT * FROM citys WHERE city_name='"+sehir+"'");
+            ResultSet rs=st.executeQuery("SELECT * FROM cities WHERE city_name='"+sehir+"'");
             while(rs.next()){
                 sehir_id=rs.getInt("city_id");
             }
@@ -88,7 +88,7 @@ public abstract class Manager {
             }
             if(ctrl==0){
                 //eğer şehirdeki bütün ilçeler yani salonlar silinir ise şehir de siliniyor
-                PreparedStatement pre2=con.prepareStatement("DELETE FROM citys WHERE city_id='"+sehir_id+"'");
+                PreparedStatement pre2=con.prepareStatement("DELETE FROM cities WHERE city_id='"+sehir_id+"'");
                 pre2.execute();
             }
             return true;
