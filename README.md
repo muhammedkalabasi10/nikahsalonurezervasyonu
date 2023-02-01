@@ -17,7 +17,15 @@ File->Project Structure->Modules->Dependencies->Click '+' button->JARs or Direct
 Some images from inside the project
 
 ![1](https://user-images.githubusercontent.com/97872051/216081380-95f1d860-b286-4fc6-abc1-68087c0bda05.PNG)
+
 ![2](https://user-images.githubusercontent.com/97872051/216081707-935f6d61-2850-4e73-9ef5-4b6a18b6f401.PNG)
+(User Sign Up Page)
+
 ![3](https://user-images.githubusercontent.com/97872051/216081730-9c933e36-1d63-418e-99ef-6ce76388b3a5.PNG)
+(User Sign In Page)
+
 ![4](https://user-images.githubusercontent.com/97872051/216081746-224cae23-df48-4b67-a2c7-b65916ba2ff9.PNG)
+(User Menu Page)
+
 ![5](https://user-images.githubusercontent.com/97872051/216081761-abb41385-e3f5-442a-959c-a056bc590950.PNG)
+(Making Reservation Page)
